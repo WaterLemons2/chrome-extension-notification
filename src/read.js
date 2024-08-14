@@ -1,5 +1,3 @@
-// @ts-check
-
 /**
  * @param {FileSystemDirectoryEntry} dirEntry
  */
@@ -23,11 +21,11 @@ function readFiles(dirEntry) {
             let path = paths.shift();
 
             reader.onload = (e) => {
-                if (!(e.target && path)) return;
+                if (!e.target) return;
                 results[trimExt(path)] = e.target.result;
+                if (!paths.length) resolve(results);
 
                 path = paths.shift();
-                if (!path) resolve(results);
                 read(path);
             };
 
